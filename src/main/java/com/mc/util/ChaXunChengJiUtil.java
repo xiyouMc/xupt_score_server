@@ -76,7 +76,7 @@ public class ChaXunChengJiUtil {
 		// get请求
 		String viewstate = HtmlUtil.getInput(get_result, "__VIEWSTATE");
 		viewstate = URLEncoder.encode(viewstate);// 必须使用编码之后的字符串
-		// System.out.println("viewstate:" + viewstate);
+		 System.out.println("viewstate:" + viewstate);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("__EVENTTARGET", "");
 		map.put("__EVENTARGUMENT", "");

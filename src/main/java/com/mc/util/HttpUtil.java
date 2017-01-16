@@ -435,7 +435,7 @@ public class HttpUtil {
 			con.setUseCaches(false);
 			con.setConnectTimeout(6000);// 最大延迟3000毫秒
 			con.setRequestProperty("Cookie", cookie);
-			con.setRequestProperty("Referer", "http://222.24.19.201/xs_main.aspx?xh=" + xh);
+			con.setRequestProperty("Referer", "http://222.24.62.120/xscjcx.aspx?xh=" + xh);
 			// 定义BufferedReader输入流来读取URL的响应
 			try {
 				in = new BufferedReader(new InputStreamReader(con.getInputStream(), "gb2312"));
