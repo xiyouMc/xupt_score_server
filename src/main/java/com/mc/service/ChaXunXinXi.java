@@ -125,6 +125,7 @@ public class ChaXunXinXi extends HttpServlet {
 							request.getParameter("xm"), "utf-8"), "GBK")
 					+ "&gnmkdm=" + request.getParameter("gnmkdm");
 			try {
+				
 				// 这里是处理异常 如果发生异常则表明 用户未评价
 				new ChaXunChengJiUtil().requestHttpGetXML(session, filename,
 						url, xh);
@@ -150,7 +151,7 @@ public class ChaXunXinXi extends HttpServlet {
 			json_result = "no_evaluation";// 未评价教师
 		}
 		// out.print(_end_data);//返回xml
-		out.print(json_result);// 返回json
+		out.print(new Passport().jiami(json_result, "248822"));// 返回json
 		// }
 	}
 

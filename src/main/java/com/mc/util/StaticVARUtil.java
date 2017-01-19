@@ -11,8 +11,7 @@ import java.util.Date;
  */
 public class StaticVARUtil {
 
-	public static final String[] xn = { "2012-2013", "2013-2014", "2014-2015",
-			"2015-2016" };
+	public static final String[] xn = { "2012-2013", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018" };
 
 	/**
 	 * 获取系统时间

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>GetPic</servlet-name>
     <servlet-class>com.mc.service.GetPic</servlet-class>
@@ -170,26 +165,6 @@
     <servlet-name>McLoginServlet</servlet-name>
     <servlet-class>com.mc.service.McLoginServlet</servlet-class>
   </servlet>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <servlet-mapping>
     <servlet-name>GetPic</servlet-name>
     <url-pattern>/GetPic.jsp</url-pattern>
@@ -305,5 +280,45 @@
   <servlet-mapping>
     <servlet-name>McLoginServlet</servlet-name>
     <url-pattern>/mclogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckPayServlet</display-name>
+    <servlet-name>CheckPayServlet</servlet-name>
+    <servlet-class>com.mc.service.CheckPayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckPayServlet</servlet-name>
+    <url-pattern>/CheckPayServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PayStatusCallback</display-name>
+    <servlet-name>PayStatusCallback</servlet-name>
+    <servlet-class>com.mc.service.PayStatusCallback</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PayStatusCallback</servlet-name>
+    <url-pattern>/PayStatusCallback</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CheckOrderNoServlet</display-name>
+    <servlet-name>CheckOrderNoServlet</servlet-name>
+    <servlet-class>com.mc.service.CheckOrderNoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckOrderNoServlet</servlet-name>
+    <url-pattern>/CheckOrderNoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetPayNumServlet</display-name>
+    <servlet-name>GetPayNumServlet</servlet-name>
+    <servlet-class>com.mc.service.GetPayNumServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPayNumServlet</servlet-name>
+    <url-pattern>/GetPayNumServlet</url-pattern>
   </servlet-mapping>
 </web-app>

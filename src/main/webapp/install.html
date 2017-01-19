@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>西邮成绩下载页面</title>
+
+
+    <style type="text/css">
+        a {
+            text-decoration: none;
+        }
+
+        #header {
+            background-color: #FFFACD;
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        #footer {
+            background-color: #FFFACD;
+        }
+
+        body {
+            font-size: 22px;
+            font-family: 楷体;
+            color: #CD00CD;
+            margin: 0 auto;
+            background-color: #FFFACD;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 32px;
+            color: #FF4040;
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 28px;
+            color: #FF00FF;
+        }
+
+        #content {
+            overflow: auto;
+            text-indent: 5px;
+            font-size: 16px;
+            margin-left: 5px;
+            color: blue;
+        }
+
+        @media all and ( min-width: 500px) {
+            #content {
+                width: 700px;
+                margin: 0 auto;
+                text-align: left;
+            }
+        }
+    </style>
+    <script language="javascript" type="text/javascript">
+        //js获取日期
+
+        function time()
+
+        {
+
+            var now = new Date();
+
+            var year = now.getFullYear();
+
+            var month = now.getMonth();
+
+            var date = now.getDate();
+
+            //写入相应id
+            document.getElementById("live_1227").innerHTML = "今天是：" + year + "年" + (month + 1) + "月" + date + "日";
+
+        }
+    </script>
+</head>
+
+<body >
+    <div id="content">
+        <h1>西邮成绩</h1>
+        
+        <h2>Android</h2>
+        可以查询平时和卷面成绩的良心软件，感谢Mc学长的开发
+        <ul>
+            <li>
+                <a href="http://www.codemc.top:8080/manager/apk/xuptscore_3.0.apk" style="color:blue; ">
+                西邮成绩3.0</a>
+            </li>
+            
+        </ul>
+
+    </div>
+    <p>
+        <div id="footer">&nbsp;</div>
+</body>
+
+</html>

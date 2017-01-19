@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import javax.json.JsonException;
+
 import com.mc.util.Passport;
 import com.mc.util.StaticVARUtil;
 
@@ -30,8 +32,7 @@ public class DBUtil {
 		Properties p = new Properties();
 		Connection c = null;
 		try {
-			InputStream in = DBUtil.class
-					.getResourceAsStream("/configDB.properties");
+			InputStream in = DBUtil.class.getResourceAsStream("/configDB.properties");
 			p.load(in);
 			String driver = p.getProperty("oracleDriver");
 			String url = p.getProperty("oracleURL");
@@ -67,8 +68,8 @@ public class DBUtil {
 		 * Connection conn = dbUtil.openConnection();
 		 * 
 		 * Statement state = conn.createStatement(); ResultSet rs =
-		 * state.executeQuery
-		 * ("select version,times from apk_version order by id DESC limit 1");
+		 * state.executeQuery (
+		 * "select version,times from apk_version order by id DESC limit 1");
 		 * try { while (rs.next()) { // BLOB blob = (BLOB)
 		 * rs.getBlob("attachment"); System.out.println("版本:" +
 		 * rs.getString(1)); } } catch (Exception e) { e.printStackTrace(); }
@@ -134,8 +135,7 @@ public class DBUtil {
 	 * 
 	 * @param isPoll
 	 */
-	public static void insertPollDownView(String time, String isPoll,
-			String scaletype) {
+	public static void insertPollDownView(String time, String isPoll, String scaletype) {
 		String sql = "insert into polldownimage(time,isPoll,scaletype) values (?,?,?)";
 		Connection conn = DBUtil.openConnection();
 		try {
@@ -170,9 +170,8 @@ public class DBUtil {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet ts = ps.executeQuery();
 			if (ts.next()) {
-				result = new File(filePath + "/" + ts.getString(1) + ".jpg")
-						.exists() ? ts.getString(1) + "|" + ts.getString(2)
-						+ "|" + ts.getString(3) : "0|0";
+				result = new File(filePath + "/" + ts.getString(1) + ".jpg").exists()
+						? ts.getString(1) + "|" + ts.getString(2) + "|" + ts.getString(3) : "0|0";
 
 			}
 			ts.close();
@@ -376,8 +375,7 @@ public class DBUtil {
 	/**
 	 * 插入用户版本
 	 */
-	public static void insertUserVersion(String username, String name,
-			String version) {
+	public static void insertUserVersion(String username, String name, String version) {
 		if (isHaveName(username, name)) {
 			String sql = "update users set version = ? where username = ?";
 			Connection conn = DBUtil.openConnection();
@@ -410,16 +408,12 @@ public class DBUtil {
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				if (rs.getString(1) == null
-						|| (rs.getString(1) != null && rs.getString(1).equals(
-								""))) {// 第一次登陆
-					PreparedStatement nameCountPs = conn
-							.prepareStatement(nameCountSql);
+				if (rs.getString(1) == null || (rs.getString(1) != null && rs.getString(1).equals(""))) {// 第一次登陆
+					PreparedStatement nameCountPs = conn.prepareStatement(nameCountSql);
 					nameCountPs.setString(1, name);// 如果这个用户名已经是垃圾，存在于其他学号中。
 					ResultSet nameCountSqlRs = nameCountPs.executeQuery();
 					while (nameCountSqlRs.next()) {
-						if (name != null || name.equals("")
-								|| nameCountSqlRs.getInt(1) == 0) {
+						if (name != null || name.equals("") || nameCountSqlRs.getInt(1) == 0) {
 							return true;
 						}
 					}
@@ -516,8 +510,7 @@ public class DBUtil {
 	 * @param username
 	 * @return
 	 */
-	public static boolean judge_usernameAndPassW(String username,
-			String password) {
+	public static boolean judge_usernameAndPassW(String username, String password) {
 		String sql = "select password from users where username = ? ";
 		Connection conn = DBUtil.openConnection();
 		try {
@@ -571,5 +564,106 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 		return name;
+	}
+
+	/**
+	 * 查询用户是否支付
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public static int getPayPermission(String username) {
+		int payPermission = 0;
+		String sql = "select isPay from users where username = ?";
+		Connection conn = DBUtil.openConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				payPermission = rs.getInt(1);
+			}
+			ps.close();
+			DBUtil.closeConn(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return payPermission;
+	}
+	
+	public static void updatePayPermission(String userName){
+		String sql = "update users set isPay = 1 where username = ?";
+		Connection conn = DBUtil.openConnection();
+		try{
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1,userName);
+			ps.execute();
+			ps.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		DBUtil.closeConn(conn);
+	}
+
+	public static void insertPayStatus(int status, String out_trade_no, String trade_no) {
+		String sql = "insert into order_table(trade_status,out_trade_no,trade_no) values (?,?,?)";
+		Connection conn = DBUtil.openConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, status);
+			ps.setString(2, out_trade_no);
+			ps.setString(3, trade_no);
+			ps.execute();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		DBUtil.closeConn(conn);
+	}
+	public static boolean isPaySuccess(String out_trade_no){
+		String sql= "select count(*) from order_table where out_trade_no = ?";
+		Connection conn = DBUtil.openConnection();
+		boolean result = false;
+		if (conn == null) {
+			return false;
+		}
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, out_trade_no);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				if (rs.getInt(1) == 1) {
+					result = true;
+				}
+			}
+			ps.close();
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			DBUtil.closeConn(conn);
+		}
+		DBUtil.closeConn(conn);
+		return result;
+	}
+	
+	public static String getPayNum(){
+		String sql = "select pay from order_pay_num";
+		String pay = "10.0";
+		Connection conn = DBUtil.openConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				pay = rs.getString(1);
+			}
+			ps.close();
+			DBUtil.closeConn(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pay;
 	}
 }
