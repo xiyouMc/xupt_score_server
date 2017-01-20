@@ -666,4 +666,40 @@ public class DBUtil {
 		}
 		return pay;
 	}
+	
+	public static String getOldPayNum(){
+		String sql = "select old_pay from order_pay_num";
+		String pay = "12.0";
+		Connection conn = DBUtil.openConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				pay = rs.getString(1);
+			}
+			ps.close();
+			DBUtil.closeConn(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pay;
+	}
+	
+	public static String getPayContent(){
+		String sql = "select content from order_pay_num";
+		String content = "";
+		Connection conn = DBUtil.openConnection();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				content = rs.getString(1);
+			}
+			ps.close();
+			DBUtil.closeConn(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return content;
+	}
 }

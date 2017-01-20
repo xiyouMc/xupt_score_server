@@ -39,6 +39,9 @@ public class GetPayNumServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("pay", DBUtil.getPayNum());
+		jsonObject.put("old_pay", DBUtil.getOldPayNum());
+		jsonObject.put("content", DBUtil.getPayContent());
+		response.setCharacterEncoding("utf-8");
 		response.getWriter().write(jsonObject.toString());
 	}
 
